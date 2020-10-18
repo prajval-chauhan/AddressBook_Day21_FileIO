@@ -28,22 +28,40 @@ namespace AddressBookDay13
         {
             Console.Clear();
             AddressBook contact = new AddressBook();
-            Console.WriteLine("Enter the first name of the person: ");
-            contact.firstName = Console.ReadLine();
-            Console.WriteLine("Enter the last name of the person: ");
-            contact.lastName = Console.ReadLine();
-            Console.WriteLine("Enter the mobile number of the person: ");
-            contact.MobileNumber = Console.ReadLine();
-            Console.WriteLine("Enter the email ID of the person: ");
-            contact.eMail = Console.ReadLine();
-            Console.WriteLine("Enter the address of the person");
-            contact.address = Console.ReadLine();
-            Console.WriteLine("Enter the ZIP code: ");
-            contact.zipCode = Console.ReadLine();
-            Console.WriteLine("Enter the state: ");
-            contact.state = Console.ReadLine();
-            Console.Clear();
-            Records.Add(contact);
+            bool check;
+            do
+            {
+                Console.WriteLine("Enter the first name of the person: ");
+                string tempFirstName = Console.ReadLine();
+                Console.WriteLine("Enter the last name of the person: ");
+                string tempLastName = Console.ReadLine();
+                check = DuplicacyCheck(tempFirstName, tempLastName);
+                if (check == false)
+                {
+                    contact.firstName = tempFirstName;
+                    contact.lastName = tempLastName;
+                    Console.WriteLine("Enter the mobile number of the person: ");
+                    contact.MobileNumber = Console.ReadLine();
+                    Console.WriteLine("Enter the email ID of the person: ");
+                    contact.eMail = Console.ReadLine();
+                    Console.WriteLine("Enter the address of the person");
+                    contact.address = Console.ReadLine();
+                    Console.WriteLine("Enter the ZIP code: ");
+                    contact.zipCode = Console.ReadLine();
+                    Console.WriteLine("Enter the state: ");
+                    contact.state = Console.ReadLine();
+                    Console.Clear();
+                    Records.Add(contact);
+                }
+                if(check == true)
+                {
+                    Console.WriteLine("\nCannot proceed further. Entry with same name already exists");
+                    Console.WriteLine("Please enter again");
+                    Console.ReadKey();
+                    Console.Clear();
+
+                }
+            } while (check == true);
         }
         /// <summary>
         /// Method to display the Contacts or single entry
@@ -144,6 +162,25 @@ namespace AddressBookDay13
                     Console.Clear();
                 }
             }
+        }
+        /// <summary>
+        /// This method checks if the entry with same name already exists or not in the records
+        /// </summary>
+        /// <param name="firstname">The firstname.</param>
+        /// <param name="lastname">The lastname.</param>
+        /// <returns></returns>
+        public bool DuplicacyCheck(string firstname, string lastname)
+        {
+            bool FLAG = false;
+            for (int i = 0; i < Records.Count; i++)
+            {
+                if(Records[i].firstName.Equals(firstname) && Records[i].lastName.Equals(lastname))
+                {
+                    FLAG = true;
+                    return FLAG;
+                }
+            }
+            return FLAG;
         }
     }
 }
