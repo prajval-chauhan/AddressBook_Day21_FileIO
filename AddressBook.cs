@@ -201,7 +201,8 @@ namespace AddressBookDay13
                 {
                     if ((Records[i].state).Equals(input) || (Records[i].zipCode).Equals(input))
                     {
-                        Console.WriteLine(Records[i].firstName + " " + Records[i].lastName);
+                        count = count + 1;
+                        Console.WriteLine(count+"."+Records[i].firstName + " " + Records[i].lastName);
                         count = count + 1;
                     }
                 }
