@@ -6,11 +6,12 @@ namespace AddressBookDay13
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("*** Welcome to the Address Book Program ***\n");
             AddressBook call = new AddressBook();
             for (; ; )
             {
-                Console.WriteLine("Enter 1 to Add Contact\nEnter 2 to display contacts\nEnter 3 to search/edit/delete\nEnter 4 to exit\n");
+                Console.WriteLine("*** Welcome to the Address Book Program ***\n");
+                Console.WriteLine("enter 1 to add contact\nenter 2 to display contacts\nenter 3 to search/edit/delete");
+                Console.WriteLine("enter 4 to search by ZIP code or city name\nenter 5 to exit");
                 int userInput = Convert.ToInt32(Console.ReadLine());
                 switch (userInput)
                 {
@@ -26,13 +27,18 @@ namespace AddressBookDay13
                         string input = Console.ReadLine();
                         call.SearchByName(input);
                         break;
+                    case 5:
+                        break;
                     case 4:
+                        Console.WriteLine("Enter the state name or ZIP code");
+                        string input2 = Console.ReadLine();
+                        call.SearchByCityOrState(input2);
                         break;
                     default:
                         Console.WriteLine("Invalid Choice");
                         break;
                 }
-                if (userInput == 4)
+                if (userInput == 5)
                     break;
             }
         }

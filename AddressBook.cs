@@ -182,5 +182,28 @@ namespace AddressBookDay13
             }
             return FLAG;
         }
+        /// <summary>
+        /// Searches the entry by the state of the by city name.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        public void SearchByCityOrState(string input)
+        {
+            if (Records.Count == 0)
+            {
+                Console.WriteLine("The address book has no entries");
+                Console.ReadKey();
+                Console.Clear();
+            }
+            else
+            {
+                for (int i = 0; i < Records.Count; i++)
+                {
+                    if ((Records[i].state).Equals(input) || (Records[i].zipCode).Equals(input))
+                        Console.WriteLine(Records[i].firstName + " " + Records[i].lastName);
+                }
+            }
+            Console.ReadKey();
+            Console.Clear();
+        }
     }
 }
