@@ -188,6 +188,7 @@ namespace AddressBookDay13
         /// <param name="input">The input.</param>
         public void SearchByCityOrState(string input)
         {
+            int count = 0; 
             if (Records.Count == 0)
             {
                 Console.WriteLine("The address book has no entries");
@@ -199,8 +200,12 @@ namespace AddressBookDay13
                 for (int i = 0; i < Records.Count; i++)
                 {
                     if ((Records[i].state).Equals(input) || (Records[i].zipCode).Equals(input))
+                    {
                         Console.WriteLine(Records[i].firstName + " " + Records[i].lastName);
+                        count = count + 1;
+                    }
                 }
+                Console.WriteLine("Number of persons in your address book of the searched city/zip code are: " +count);
             }
             Console.ReadKey();
             Console.Clear();
