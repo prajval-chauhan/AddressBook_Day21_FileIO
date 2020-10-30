@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AddressBookDay13
 {
-    class AddressBook
+    class AddressBook 
     {
         /// <summary>
         /// A list with the name 'Records' is created with the objectie to store the objects of AddressBook type
@@ -203,13 +203,21 @@ namespace AddressBookDay13
                     {
                         count = count + 1;
                         Console.WriteLine(count+"."+Records[i].firstName + " " + Records[i].lastName);
-                        count = count + 1;
                     }
                 }
                 Console.WriteLine("Number of persons in your address book of the searched city/zip code are: " +count);
             }
             Console.ReadKey();
             Console.Clear();
+        }
+        /// <summary>
+        /// Sorts the list using sort method , passsing a Comaparison<T> delegate
+        /// if you need descending sort, swap x and y on the right-hand side of the arrow =>. –
+        /// </summary>
+        public void SortUsingName()
+        {
+            Records.Sort((x, y) => x.firstName.CompareTo(y.firstName));
+            DisplayRecords();
         }
     }
 }
