@@ -17,7 +17,7 @@ namespace AddressBookDay13
         public string lastName;
         public string MobileNumber;
         public string eMail;
-        public string address;
+        public string city;
         public string zipCode;
         public string state;
 
@@ -44,8 +44,8 @@ namespace AddressBookDay13
                     contact.MobileNumber = Console.ReadLine();
                     Console.WriteLine("Enter the email ID of the person: ");
                     contact.eMail = Console.ReadLine();
-                    Console.WriteLine("Enter the address of the person");
-                    contact.address = Console.ReadLine();
+                    Console.WriteLine("Enter the city of the person");
+                    contact.city = Console.ReadLine();
                     Console.WriteLine("Enter the ZIP code: ");
                     contact.zipCode = Console.ReadLine();
                     Console.WriteLine("Enter the state: ");
@@ -73,7 +73,7 @@ namespace AddressBookDay13
             Console.WriteLine("Last Name : " + contact.lastName);
             Console.WriteLine("Mobile  Number : " + contact.MobileNumber);
             Console.WriteLine("Email : " + contact.eMail);
-            Console.WriteLine("Address : " + contact.address);
+            Console.WriteLine("City : " + contact.city);
             Console.WriteLine("ZIP Code: " + contact.zipCode);
             Console.WriteLine("state : " + contact.state);
             Console.WriteLine("***************");
@@ -136,8 +136,8 @@ namespace AddressBookDay13
                                 Records[i].MobileNumber = Console.ReadLine();
                                 Console.WriteLine("Enter the email ID of the person: ");
                                 Records[i].eMail = Console.ReadLine();
-                                Console.WriteLine("Enter the address of the person");
-                                Records[i].address = Console.ReadLine();
+                                Console.WriteLine("Enter the city of the person");
+                                Records[i].city = Console.ReadLine();
                                 Console.WriteLine("Enter the ZIP code: ");
                                 Records[i].zipCode = Console.ReadLine();
                                 Console.WriteLine("Enter the state: ");
@@ -199,7 +199,7 @@ namespace AddressBookDay13
             {
                 for (int i = 0; i < Records.Count; i++)
                 {
-                    if ((Records[i].state).Equals(input) || (Records[i].zipCode).Equals(input))
+                    if ((Records[i].state).Equals(input) || (Records[i].city).Equals(input))
                     {
                         count = count + 1;
                         Console.WriteLine(count+"."+Records[i].firstName + " " + Records[i].lastName);
@@ -214,9 +214,23 @@ namespace AddressBookDay13
         /// Sorts the list using sort method , passsing a Comaparison<T> delegate
         /// if you need descending sort, swap x and y on the right-hand side of the arrow =>. –
         /// </summary>
-        public void SortUsingName()
+        public void SortingAddressBook(int i)
         {
-            Records.Sort((x, y) => x.firstName.CompareTo(y.firstName));
+            switch(i)
+            {
+                case 1:
+                    Records.Sort((x, y) => x.firstName.CompareTo(y.firstName));
+                    break;
+                case 2:
+                    Records.Sort((x, y) => x.zipCode.CompareTo(y.zipCode));
+                    break;
+                case 3:
+                    Records.Sort((x, y) => x.state.CompareTo(y.state));
+                    break;
+                case 4:
+                    Records.Sort((x, y) => x.city.CompareTo(y.city));
+                    break;
+            }
             DisplayRecords();
         }
     }

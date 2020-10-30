@@ -29,16 +29,15 @@ namespace AddressBookDay13
                         call.SearchByName(input);
                         break;
                     case 4:
-                        Console.WriteLine("Enter the state name or ZIP code");
+                        Console.WriteLine("Enter the state name or city");
                         string input2 = Console.ReadLine();
                         call.SearchByCityOrState(input2);
                         break;
                     case 5:
                         Console.Clear();
-                        Console.WriteLine("enter 1 to sort by first name");
+                        Console.WriteLine("enter 1 to sort by first name\nenter 2 to sort by state\nenter 3 to sort by ZIP code\nenter 4 to sort using City");
                         int inputSort = Convert.ToInt32(Console.ReadLine());
-                        if (inputSort == 1)
-                            call.SortUsingName();
+                        call.SortingAddressBook(inputSort);
                         break;
                     case 6:
                         break;
@@ -46,7 +45,7 @@ namespace AddressBookDay13
                         Console.WriteLine("Invalid Choice");
                         break;
                 }
-                if (userInput == 5)
+                if (userInput == 6)
                     break;
             }
         }
