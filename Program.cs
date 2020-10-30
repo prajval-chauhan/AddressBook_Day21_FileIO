@@ -12,7 +12,7 @@ namespace AddressBookDay13
                 Console.WriteLine("*** Welcome to the Address Book Program ***\n");
                 Console.WriteLine("enter 1 to add contact\nenter 2 to display contacts\nenter 3 to search/edit/delete");
                 Console.WriteLine("enter 4 to search by ZIP code or city name\nenter 5 to view the sorted address book");
-                Console.WriteLine("enter 6 to exit");
+                Console.WriteLine("enter 6 to perform File IO Operations\nenter 7 to exit");
                 int userInput = Convert.ToInt32(Console.ReadLine());
                 switch (userInput)
                 {
@@ -40,12 +40,18 @@ namespace AddressBookDay13
                         call.SortingAddressBook(inputSort);
                         break;
                     case 6:
+                        Console.WriteLine("enter 1 to copy export the data into the notepad file\nenter 2 to see the exported data");
+                        int file = Convert.ToInt32(Console.ReadLine());
+                        FileIO fileIO = new FileIO();
+                        fileIO.callMethod(file);
+                        break;
+                    case 7:
                         break;
                     default:
                         Console.WriteLine("Invalid Choice");
                         break;
                 }
-                if (userInput == 6)
+                if (userInput == 7)
                     break;
             }
         }

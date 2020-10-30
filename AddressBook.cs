@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace AddressBookDay13
 {
-    class AddressBook 
+    public class AddressBook 
     {
         /// <summary>
         /// A list with the name 'Records' is created with the objectie to store the objects of AddressBook type
