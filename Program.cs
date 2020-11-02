@@ -40,7 +40,10 @@ namespace AddressBookDay13
                         call.SortingAddressBook(inputSort);
                         break;
                     case 6:
-                        Console.WriteLine("enter 1 to copy export the data into the notepad file\nenter 2 to see the exported data");
+                        Console.Clear();
+                        Console.WriteLine("enter 1 to copy export the data into the .txt file\nenter 2 to see the data exported from .txt file");
+                        Console.WriteLine("enter 3 to copy export the data into the .csv file\nenter 4 to see the data exported from .csv file");
+                        Console.WriteLine("enter 5 to copy export the data into the .json file\nenter 6 to see the data exported from .json file");
                         int file = Convert.ToInt32(Console.ReadLine());
                         FileIO fileIO = new FileIO();
                         fileIO.callMethod(file);

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Text;
-using CsvHelper;
+using System.IO;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
-using CsvHelper.Configuration;
+using Newtonsoft.Json;
 
 namespace AddressBookDay13
 {
@@ -14,7 +14,8 @@ namespace AddressBookDay13
         // A count vairiabl eto print the serial number of the contacts while exporting them
         int count = 0;
         //This is the path of the .txt file that would be used
-        string path = @"C:\Users\prajv\source\repos\AddressBookDay13\Contact Book.txt";
+        string path = @$"C:\Users\prajv\source\repos\AddressBookDay13\Contact Book.txt";
+        public static string jsonPath = $@"C:\Users\prajv\source\repos\AddressBookDay13\FileIO.json";
         /// <summary>
         /// Calls the is used to call the Read/Write method as required by the user
         /// </summary>
@@ -24,20 +25,47 @@ namespace AddressBookDay13
             switch (i)
             {
                 case 1:
-                    EditAddressBook();
+                    WriteAddressBook();
+                    Console.Clear();
+                    Console.WriteLine("Contacts exported to .txt file");
+                    Console.ReadKey();
                     break;
                 case 2:
+                    Console.Clear();
                     ReadAddressBook();
+                    Console.ReadKey();
+                    break;
+                case 3:
+                    Console.Clear();
+                    WriteAddressBookCSV();
+                    Console.ReadKey();
+                    break;
+                case 4:
+                    Console.Clear();
+                    ReadAddressBookCSV();
+                    Console.ReadKey();
+                    break;
+                case 5:
+                    Console.Clear();
+                    WriteAddressBookJson();
+                    Console.ReadKey();
+                    break;
+                case 6:
+                    Console.Clear();
+                    ReadAddressBookJson();
+                    Console.ReadKey();
                     break;
                 default:
+                    Console.Clear();
                     Console.WriteLine("Invalid Choice");
+                    Console.ReadKey();
                     break;
             }
         }
         /// <summary>
         ///  This method is used to copy the data of the list that is storing the contacts into the .txt file
         /// </summary>
-        public void EditAddressBook()
+        public void WriteAddressBook()
         {
             if(File.Exists(path))
             {
@@ -46,7 +74,7 @@ namespace AddressBookDay13
                     foreach (AddressBook contact in AddressBook.Records)
                     {
                         count++;
-                        copyAddressBook.WriteLine("**********\nCntact No: {0}\n***********", count);
+                        copyAddressBook.WriteLine("**********\nContact No: {0}\n***********", count);
                         copyAddressBook.WriteLine("First Name : " + contact.firstName);
                         copyAddressBook.WriteLine("Last  Name : " + contact.lastName);
                         copyAddressBook.WriteLine("Mobile Number : " + contact.MobileNumber);
@@ -78,26 +106,70 @@ namespace AddressBookDay13
                 }
             }
         }
-        public static void WriteAddressBookCsv(AddressBook addressBook)
+        /// <summary>
+        /// This method is used to write the data/contents of address book list into the .csv file
+        /// </summary>
+        public void WriteAddressBookCSV()
         {
-            string path = @"C:\Users\prajv\source\repos\AddressBookDay13\AddressBook.csv";
-            using (StreamWriter writer = new StreamWriter(path))
+            string csvFilePath = @$"C:\Users\prajv\source\repos\AddressBookDay13\FileIO.csv";
+            using (StreamWriter writer = new StreamWriter(csvFilePath))
             {
                 var csv = new CsvHelper.CsvWriter(writer, CultureInfo.InvariantCulture);
                 csv.Configuration.MemberTypes = CsvHelper.Configuration.MemberTypes.Fields;
                 csv.WriteRecords(AddressBook.Records);
-                writer.Close();
+                writer.Flush();
             }
         }
-        public static void ReadAddressBookCsv()
+        /// <summary>
+        /// This method is used to read the data/contents of the .csv file
+        /// </summary>
+        public static void ReadAddressBookCSV()
         {
-            string path = @"C:\Users\prajv\source\repos\AddressBookDay13\AddressBook.csv";
-            var reader = new StreamReader(path);
-            var csv = new CsvHelper.CsvReader(reader, CultureInfo.InvariantCulture);
-            var records = csv.GetRecords<AddressBook>().ToList();
-            foreach(AddressBook contact in AddressBook.Records)
+            string csvFilePath = @$"C:\Users\prajv\source\repos\AddressBookDay13\FileIO.csv";
+            using (var reader = new StreamReader(csvFilePath))
+                using(var csv = new CsvHelper.CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                Console.WriteLine("FullName : " +contact.firstName+" "+contact.lastName);
+                var records = csv.GetRecords<AddressBook>().ToList();
+                foreach(AddressBook contact in records)
+                {
+                    Console.WriteLine("First Name : " + contact.firstName);
+                    Console.WriteLine("Last  Name : " + contact.lastName);
+                    Console.WriteLine("Mobile Number : " + contact.MobileNumber);
+                    Console.WriteLine("Email : " + contact.eMail);
+                    Console.WriteLine("zipCode : " + contact.zipCode);
+                    Console.WriteLine("City : " + contact.city);
+                    Console.WriteLine("State : " + contact.state);
+                }
+            }
+        }
+        /// <summary>
+        /// This method is used to write the data/contents of address book list into the .json file
+        /// </summary>
+        public static void WriteAddressBookJson()
+        {
+            using (StreamWriter writer = new StreamWriter(jsonPath))
+            {
+                string json = JsonConvert.SerializeObject(AddressBook.Records);
+                writer.WriteLine(json);
+                writer.Flush();
+            }
+        }
+        /// <summary>
+        /// This method is used to read the data/contents of address book list into the .json file
+        /// </summary>
+        public static void ReadAddressBookJson()
+        {
+            string json = File.ReadAllText(jsonPath);
+            List<AddressBook> records = JsonConvert.DeserializeObject<List<AddressBook>>(json);
+            foreach(AddressBook contact in records)
+            {
+                Console.WriteLine("First Name : " + contact.firstName);
+                Console.WriteLine("Last  Name : " + contact.lastName);
+                Console.WriteLine("Mobile Number : " + contact.MobileNumber);
+                Console.WriteLine("Email : " + contact.eMail);
+                Console.WriteLine("zipCode : " + contact.zipCode);
+                Console.WriteLine("City : " + contact.city);
+                Console.WriteLine("State : " + contact.state);
             }
         }
     }
