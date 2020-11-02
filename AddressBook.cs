@@ -20,7 +20,7 @@ namespace AddressBookDay13
         public string eMail;
         public string city;
         public string zipCode;
-        public string state;
+        public string state; 
 
         /// <summary>
         /// Method to add the contact Entry
