@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Globalization;
 using System.IO;
-using System.ComponentModel;
+using System.Text;
+using CsvHelper;
+using System.Linq;
+using CsvHelper.Configuration;
 
 namespace AddressBookDay13
 {
@@ -12,6 +15,25 @@ namespace AddressBookDay13
         int count = 0;
         //This is the path of the .txt file that would be used
         string path = @"C:\Users\prajv\source\repos\AddressBookDay13\Contact Book.txt";
+        /// <summary>
+        /// Calls the is used to call the Read/Write method as required by the user
+        /// </summary>
+        /// <param name="i">The i.</param>
+        public void callMethod(int i)
+        {
+            switch (i)
+            {
+                case 1:
+                    EditAddressBook();
+                    break;
+                case 2:
+                    ReadAddressBook();
+                    break;
+                default:
+                    Console.WriteLine("Invalid Choice");
+                    break;
+            }
+        }
         /// <summary>
         ///  This method is used to copy the data of the list that is storing the contacts into the .txt file
         /// </summary>
@@ -56,23 +78,26 @@ namespace AddressBookDay13
                 }
             }
         }
-        /// <summary>
-        /// Calls the is used to call the Read/Write method as required by the user
-        /// </summary>
-        /// <param name="i">The i.</param>
-        public void callMethod(int i)
+        public static void WriteAddressBookCsv(AddressBook addressBook)
         {
-            switch(i)
+            string path = @"C:\Users\prajv\source\repos\AddressBookDay13\AddressBook.csv";
+            using (StreamWriter writer = new StreamWriter(path))
             {
-                case 1:
-                    EditAddressBook();
-                    break;
-                case 2:
-                    ReadAddressBook();
-                    break;
-                default:
-                    Console.WriteLine("Invalid Choice");
-                    break;
+                var csv = new CsvHelper.CsvWriter(writer, CultureInfo.InvariantCulture);
+                csv.Configuration.MemberTypes = CsvHelper.Configuration.MemberTypes.Fields;
+                csv.WriteRecords(AddressBook.Records);
+                writer.Close();
+            }
+        }
+        public static void ReadAddressBookCsv()
+        {
+            string path = @"C:\Users\prajv\source\repos\AddressBookDay13\AddressBook.csv";
+            var reader = new StreamReader(path);
+            var csv = new CsvHelper.CsvReader(reader, CultureInfo.InvariantCulture);
+            var records = csv.GetRecords<AddressBook>().ToList();
+            foreach(AddressBook contact in AddressBook.Records)
+            {
+                Console.WriteLine("FullName : " +contact.firstName+" "+contact.lastName);
             }
         }
     }
